@@ -1,22 +1,25 @@
 package com.example.restservice.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRawValue;
 
-public class Message
-{
-    @JsonProperty("message")
-    private String message;
-    public Message(String message) {
-        this.message = message;
+public class Message {
+    private String content;
+
+    public Message(String content) {
+        // Sanitize the input string before assigning it
+        this.content = sanitize(content);
     }
 
-    // Getter and setter for message
-    public String getMessage() {
-        return message;
+    public String getContent() {
+        return content;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setContent(String content) {
+        this.content = content;
     }
 
+    // Method to sanitize the input string
+    private String sanitize(String input) {
+        return input.replaceAll("\\r\\n|\\n|\\r", "");
+    }
 }
